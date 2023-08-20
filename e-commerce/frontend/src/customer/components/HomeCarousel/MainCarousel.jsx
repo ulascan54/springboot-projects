@@ -1,23 +1,27 @@
-import React from 'react';
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
-import { mainCarouselData } from './MainCarouselData';
-
-
-
+import React from "react"
+import AliceCarousel from "react-alice-carousel"
+import "react-alice-carousel/lib/alice-carousel.css"
+import { mainCarouselData } from "./MainCarouselData"
 
 const MainCarousel = () => {
-    const items = mainCarouselData.map((item)=> <img className="cursor-pointer" role='presentation' src={item.image} alt=""/> )
+  const items = mainCarouselData.map((item) => (
+    <img
+      className="cursor-pointer -z-10"
+      role="presentation"
+      src={item.image}
+      alt=""
+    />
+  ))
 
-    return(
+  return (
     <AliceCarousel
-        items={items}
-        disableButtonsControls
-        autoPlay
-        autoPlayInterval={1000}
-        infinite
-
-    />)
+      items={items}
+      disableButtonsControls
+      autoPlay
+      autoPlayInterval={1000}
+      infinite
+    />
+  )
 }
 
-export default MainCarousel;
+export default MainCarousel

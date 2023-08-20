@@ -2,7 +2,6 @@ import React from "react"
 import MainCarousel from "../../components/HomeCarousel/MainCarousel"
 import HomeSectionCarousel from "../../components/HomeSectionCarousel/HomeSectionCarousel"
 import { mens_kurta } from "../../../Data/mens_kurta"
-import Footer from "../../components/Footer/Footer"
 
 function HomePage() {
   return (
@@ -15,7 +14,6 @@ function HomePage() {
         <HomeSectionCarousel data={mens_kurta} sectionName="Women's Saree" />
         <HomeSectionCarousel data={mens_kurta} sectionName="Women's Dress" />
       </div>
-      <Footer />
     </div>
   )
 }
