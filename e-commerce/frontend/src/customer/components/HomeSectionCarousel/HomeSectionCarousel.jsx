@@ -4,7 +4,7 @@ import HomeSectionCard from "../HomeSectionCard/HomeSectionCard"
 import { Button } from "@mui/material"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft"
 
-const HomeSectionCarousel = () => {
+const HomeSectionCarousel = ({ data, sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const responsive = {
     0: { items: 1 },
@@ -17,16 +17,18 @@ const HomeSectionCarousel = () => {
 
   const syncActiveIndex = ({ item }) => setActiveIndex(item)
 
-  const items = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) => (
-    <HomeSectionCard />
-  ))
+  const items = data
+    .slice(0, 10)
+    .map((item) => <HomeSectionCard product={item} />)
   return (
     <div className="border">
+      <h2 className="text-2xl font-extrabold text-gray-800 p-5">
+        {sectionName}
+      </h2>
       <div className="relative p-5">
         <AliceCarousel
           items={items}
           disableButtonsControls
-          infinite
           responsive={responsive}
           disableDotsControls
           onSlideChanged={syncActiveIndex}
