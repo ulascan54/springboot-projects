@@ -1,4 +1,3 @@
-import "./App.css"
 import Navbar from "./components/Navbar/Navbar"
 import User from "./components/User/User"
 import Home from "./components/Home/Home"

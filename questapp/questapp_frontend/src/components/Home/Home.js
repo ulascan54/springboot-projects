@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import Post from "../Post/Post"
 import "./Home.scss"
 import axios from "axios"
+import { Container } from "@mui/material"
 
 function Home() {
   const [error, setError] = useState(null)
@@ -28,12 +29,21 @@ function Home() {
   }
 
   return (
-    <div className="container">
-      <div>Home</div>
+    <Container
+      className="container"
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "start",
+        alignItems: "center",
+        backgroundColor: "#cfe8fc",
+        height: "100vh",
+      }}
+    >
       {postlist.map((post) => (
         <Post title={post.title} text={post.text} />
       ))}
-    </div>
+    </Container>
   )
 }
 
