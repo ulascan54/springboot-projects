@@ -21,7 +21,7 @@ const ExpandMore = styled((props) => {
   }),
 }))
 
-function Post({ title, text }) {
+function Post({ data }) {
   const [expanded, setExpanded] = useState(false)
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -35,11 +35,11 @@ function Post({ title, text }) {
             R
           </Avatar>
         }
-        title={title}
+        title={data.title}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {text}
+          {data.text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

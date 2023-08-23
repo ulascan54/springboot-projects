@@ -41,7 +41,7 @@ function Home() {
       }}
     >
       {postlist.map((post) => (
-        <Post title={post.title} text={post.text} />
+        <Post data={post} />
       ))}
     </Container>
   )
