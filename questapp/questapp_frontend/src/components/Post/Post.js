@@ -24,8 +24,12 @@ const ExpandMore = styled((props) => {
 
 function Post({ data }) {
   const [expanded, setExpanded] = useState(false)
+  const [like, setLike] = useState(false)
   const handleExpandClick = () => {
     setExpanded(!expanded)
+  }
+  const handleLike = () => {
+    setLike(!like)
   }
 
   return (
@@ -52,7 +56,11 @@ function Post({ data }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton
+          aria-label="add to favorites"
+          onClick={handleLike}
+          sx={{ color: `${like === true ? "red" : ""}` }}
+        >
           <FavoriteIcon />
         </IconButton>
 
