@@ -32,11 +32,12 @@ function Home() {
     <Container
       className="container"
       sx={{
+        width: "100 !important",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "start",
         alignItems: "center",
-        backgroundColor: "#cfe8fc",
+        backgroundColor: "",
         height: "100vh",
       }}
     >

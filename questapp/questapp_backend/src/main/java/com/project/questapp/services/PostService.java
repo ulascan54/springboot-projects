@@ -26,13 +26,13 @@ public class PostService {
 
     public List<PostResponse> getAllPosts(Optional<Long> userId) {
         List<Post> list;
-        if (userId.isPresent()){
+        if (userId.isPresent()) {
             list = postRepository.findByUserId(userId.get());
             return list.stream().map(post -> new PostResponse(post)).collect(Collectors.toList());
+        } else {
+            list = postRepository.findAll();
+            return list.stream().map(post -> new PostResponse(post)).collect(Collectors.toList());
         }
-
-        list = postRepository.findAll();
-        return list.stream().map(post -> new PostResponse(post)).collect(Collectors.toList());
     }
 
     public Post getOnePostById(Long postId) {
@@ -41,7 +41,7 @@ public class PostService {
 
     public Post createOnePost(PostCreateRequest newPostRequest) {
         User user = userService.getOneUserById(newPostRequest.getUserId());
-        if (user==null)
+        if (user == null)
             return null;
         Post toSave = new Post();
         toSave.setId(newPostRequest.getId());
@@ -54,7 +54,7 @@ public class PostService {
 
     public Post updateOnePostById(Long postId, PostUpdateRequest updatePost) {
         Optional<Post> post = postRepository.findById(postId);
-        if(post.isPresent()){
+        if (post.isPresent()) {
             Post toUpdate = post.get();
             toUpdate.setText(updatePost.getText());
             toUpdate.setTitle(updatePost.getTitle());

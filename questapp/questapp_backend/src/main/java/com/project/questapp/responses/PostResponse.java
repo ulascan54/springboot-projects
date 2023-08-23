@@ -1,7 +1,9 @@
 package com.project.questapp.responses;
 
 import com.project.questapp.entities.Post;
+import lombok.Data;
 
+@Data
 public class PostResponse {
     Long id;
     Long userId;

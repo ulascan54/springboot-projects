@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography"
 import { red } from "@mui/material/colors"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer"
+import { Link } from "react-router-dom"
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props
   return <IconButton {...other} />
@@ -31,9 +32,17 @@ function Post({ data }) {
     <Card sx={{ width: 800, margin: "20px" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
+          <Link
+            style={{
+              textDecoration: "none",
+              color: "white",
+            }}
+            to={{ pathname: "/users/" + data.userId }}
+          >
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              {data.userName.charAt(0).toUpperCase()}
+            </Avatar>
+          </Link>
         }
         title={data.title}
       />

@@ -5,7 +5,11 @@ import { Routes, Route } from "react-router-dom"
 
 function App() {
   return (
-    <div className="App">
+    <div
+      style={{
+        backgroundColor: "#cfe8fc",
+      }}
+    >
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
