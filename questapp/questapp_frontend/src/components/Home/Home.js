@@ -3,12 +3,14 @@ import Post from "../Post/Post"
 import "./Home.scss"
 import axios from "axios"
 import { Container } from "@mui/material"
+import PostForm from "../Post/PostForm"
 
 function Home() {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [postlist, setPostList] = useState([])
-  useEffect(() => {
+
+  const fetchAllPosts = () => {
     axios("/posts")
       .then((response) => {
         setIsLoaded(true)
@@ -18,7 +20,11 @@ function Home() {
         setIsLoaded(true)
         setError(error)
       })
-  }, [])
+  }
+
+  useEffect(() => {
+    fetchAllPosts()
+  }, [postlist])
 
   if (error) {
     return <div>Error!!</div>
@@ -37,12 +43,12 @@ function Home() {
         flexWrap: "wrap",
         justifyContent: "start",
         alignItems: "center",
-        backgroundColor: "",
-        height: "100vh",
       }}
     >
-      {postlist.map((post) => (
-        <Post data={post} />
+      <PostForm data={postlist[1]} fetchAllPosts={fetchAllPosts} />
+
+      {postlist.map((post, i) => (
+        <Post data={post} key={i} />
       ))}
     </Container>
   )
