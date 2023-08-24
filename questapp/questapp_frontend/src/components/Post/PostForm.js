@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, forwardRef } from "react"
 import Card from "@mui/material/Card"
 import CardHeader from "@mui/material/CardHeader"
 import CardContent from "@mui/material/CardContent"
@@ -7,10 +7,12 @@ import Typography from "@mui/material/Typography"
 import { Link } from "react-router-dom"
 import { Button, InputAdornment, OutlinedInput } from "@mui/material"
 import axios from "axios"
+import SnackBar from "../SnackBar/SnackBar"
 
 function PostForm({ data, fetchAllPosts }) {
   const [text, setText] = useState("")
   const [title, setTitle] = useState("")
+  const [isSend, setIsSend] = useState(false)
   const savePost = () => {
     axios
       .post("/posts", {
@@ -27,7 +29,10 @@ function PostForm({ data, fetchAllPosts }) {
   }
   const handleSubmit = () => {
     savePost()
+    setIsSend(true)
     fetchAllPosts()
+    setTitle("")
+    setText("")
   }
   return (
     <Card sx={{ width: 800, margin: "20px" }}>
@@ -56,8 +61,10 @@ function PostForm({ data, fetchAllPosts }) {
             multiline
             placeholder="Title"
             fullWidth
+            value={title}
             onChange={(e) => {
               setTitle(e.target.value)
+              setIsSend(false)
             }}
             inputProps={{ maxLength: 25 }}
           />
@@ -70,8 +77,10 @@ function PostForm({ data, fetchAllPosts }) {
             multiline
             placeholder="Text"
             fullWidth
+            value={text}
             onChange={(e) => {
               setText(e.target.value)
+              setIsSend(false)
             }}
             inputProps={{ maxLength: 250 }}
             endAdornment={
@@ -91,6 +100,7 @@ function PostForm({ data, fetchAllPosts }) {
           />
         </Typography>
       </CardContent>
+      <SnackBar isOpen={isSend} text={"Yükleme başarı ile tamamlandı"} />
     </Card>
   )
 }

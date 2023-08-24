@@ -14,7 +14,7 @@ function Home() {
     axios("/posts")
       .then((response) => {
         setIsLoaded(true)
-        setPostList(response.data)
+        setPostList(response.data.reverse())
       })
       .catch((error) => {
         setIsLoaded(true)
