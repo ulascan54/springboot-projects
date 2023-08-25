@@ -32,6 +32,7 @@ function Post({ data }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [commentList, setCommentList] = useState([])
   const isInitialMount = useRef(true)
+
   const handleExpandClick = () => {
     setExpanded(!expanded)
     fetchAllComments()
@@ -44,7 +45,7 @@ function Post({ data }) {
     axios("/comments?postId=" + data.id)
       .then((response) => {
         setIsLoaded(true)
-        setCommentList(response.data.reverse())
+        setCommentList(response.data)
       })
       .catch((error) => {
         setIsLoaded(true)
@@ -113,7 +114,7 @@ function Post({ data }) {
               ))
             : "Loading..."}
           <hr />
-          <CommentForm userName={"user"} userId={1} postId={data.postId} />
+          <CommentForm userName={"user"} userId={1} postId={data.id} />
         </Container>
       </Collapse>
     </Card>

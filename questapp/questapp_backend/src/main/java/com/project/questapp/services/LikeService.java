@@ -1,16 +1,17 @@
 package com.project.questapp.services;
 
 
-import com.project.questapp.entities.Comment;
 import com.project.questapp.entities.Like;
 import com.project.questapp.entities.Post;
 import com.project.questapp.entities.User;
 import com.project.questapp.repos.LikeRepository;
 import com.project.questapp.requests.LikeCreateRequest;
+import com.project.questapp.responses.LikeResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LikeService {
@@ -24,14 +25,18 @@ public class LikeService {
         this.postService = postService;
     }
 
-    public List<Like> getAllLikesWithParams(Optional<Long> userId, Optional<Long> postId) {
+    public List<LikeResponse> getAllLikesWithParams(Optional<Long> userId, Optional<Long> postId) {
+            List<Like> list;
             if (userId.isPresent() && postId.isPresent()) {
-                return likeRepository.findByUserIdAndPostId(userId.get(), postId.get());
+                list = likeRepository.findByUserIdAndPostId(userId.get(), postId.get());
             } else if (userId.isPresent()) {
-                return likeRepository.findByUserId(userId.get());
+                list = likeRepository.findByUserId(userId.get());
             } else if (postId.isPresent()) {
-                return likeRepository.findByPostId(postId.get());
-            } else return likeRepository.findAll();
+                list = likeRepository.findByPostId(postId.get());
+            } else list= likeRepository.findAll();
+
+            return list.stream().map(like -> new LikeResponse(like)).collect(Collectors.toList());
+
     }
 
     public Like createOneLike(LikeCreateRequest request) {

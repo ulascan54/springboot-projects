@@ -27,7 +27,9 @@ function CommentForm({ userId, userName, postId }) {
       })
   }
   const handleSubmit = () => {
+    console.log(text)
     saveComment()
+    setText("")
   }
   return (
     <CardContent>
