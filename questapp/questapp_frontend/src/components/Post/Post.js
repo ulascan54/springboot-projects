@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { styled } from "@mui/material/styles"
 import Card from "@mui/material/Card"
 import CardHeader from "@mui/material/CardHeader"
@@ -11,6 +11,10 @@ import Typography from "@mui/material/Typography"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer"
 import { Link } from "react-router-dom"
+import axios from "axios"
+import { Container } from "@mui/material"
+import Comment from "../Comment/Comment"
+import CommentForm from "../Comment/CommentForm"
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props
   return <IconButton {...other} />
@@ -24,12 +28,34 @@ const ExpandMore = styled((props) => {
 function Post({ data }) {
   const [expanded, setExpanded] = useState(false)
   const [like, setLike] = useState(false)
+  const [error, setError] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [commentList, setCommentList] = useState([])
+  const isInitialMount = useRef(true)
   const handleExpandClick = () => {
     setExpanded(!expanded)
+    fetchAllComments()
+    console.log(commentList)
   }
   const handleLike = () => {
     setLike(!like)
   }
+  const fetchAllComments = () => {
+    axios("/comments?postId=" + data.id)
+      .then((response) => {
+        setIsLoaded(true)
+        setCommentList(response.data.reverse())
+      })
+      .catch((error) => {
+        setIsLoaded(true)
+        setError(error)
+      })
+  }
+
+  useEffect(() => {
+    if (isInitialMount.current) isInitialMount.current = false
+    else fetchAllComments()
+  }, [commentList])
 
   return (
     <Card sx={{ width: 800, margin: "20px" }}>
@@ -78,7 +104,17 @@ function Post({ data }) {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent></CardContent>
+        <Container fixed>
+          {error
+            ? "error"
+            : isLoaded
+            ? commentList.map((comment) => (
+                <Comment data={comment} userName={"user"} userId={1} />
+              ))
+            : "Loading..."}
+          <hr />
+          <CommentForm userName={"user"} userId={1} postId={data.postId} />
+        </Container>
       </Collapse>
     </Card>
   )
