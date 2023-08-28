@@ -142,7 +142,7 @@ function classNames(...classes) {
 }
 
 export default function Navigation() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <div className="bg-white z-50">
